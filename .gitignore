@@ -1,0 +1,35 @@
+# ML models
+*.pth
+*.pt
+*.h5
+*.pkl
+*.onnx
+
+backend/app/models/
+
+# Datasets
+data/
+datasets/
+perfect_mixed_dataset/
+synthetic_mix/
+
+# Images
+*.jpg
+*.png
+
+# Uploads
+uploads/
+
+# Node
+node_modules/
+
+# Env
+.env
+venv/
+
+# Python cache
+__pycache__/
+
+# OS
+.DS_Store
+Thumbs.db
