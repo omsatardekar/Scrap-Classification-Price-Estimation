@@ -27,7 +27,64 @@ export default function AdminSidebar({ onLogout }) {
           Dashboard
         </NavLink>
 
-        
+        <NavLink
+          to="/admin/orders"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              isActive
+                ? "bg-cyan-500/15 text-cyan-400"
+                : "text-gray-400 hover:bg-white/5 hover:text-white"
+            }`
+          }
+        >
+          <span className="material-icons-outlined text-xl">fact_check</span>
+          Review Orders
+        </NavLink>
+
+        <NavLink
+          to="/admin/users"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              isActive
+                ? "bg-cyan-500/15 text-cyan-400"
+                : "text-gray-400 hover:bg-white/5 hover:text-white"
+            }`
+          }
+        >
+          <span className="material-icons-outlined text-xl">group</span>
+          Users
+        </NavLink>
+
+        <NavLink
+          to="/admin/delivery"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              isActive
+                ? "bg-cyan-500/15 text-cyan-400"
+                : "text-gray-400 hover:bg-white/5 hover:text-white"
+            }`
+          }
+        >
+          <span className="material-icons-outlined text-xl">local_shipping</span>
+          Delivery Agents
+        </NavLink>
+
+        <div className="my-4 border-t border-white/10" />
+
+        <NavLink
+          to="/admin/profile"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              isActive
+                ? "bg-cyan-500/15 text-cyan-400"
+                : "text-gray-400 hover:bg-white/5 hover:text-white"
+            }`
+          }
+        >
+          <span className="material-icons-outlined text-xl">manage_accounts</span>
+          Account
+        </NavLink>
+
       </nav>
 
       {/* LOGOUT (BOTTOM FIXED) */}

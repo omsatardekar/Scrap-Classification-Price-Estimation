@@ -22,6 +22,10 @@ import Predict from "./pages/Predict";
 
 // Admin
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminProfile from "./pages/admin/AdminProfile";
+import AdminDelivery from "./pages/admin/AdminDelivery";
 
 // Delivery
 import DeliveryDashboard from "./pages/delivery/DeliveryDashboard";
@@ -75,6 +79,10 @@ export default function App() {
           }
         >
           <Route index element={<AdminDashboard />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="delivery" element={<AdminDelivery />} />
         </Route>
 
         {/* ================= DELIVERY DASHBOARD ================= */}
@@ -87,7 +95,7 @@ export default function App() {
           }
         >
           <Route index element={<DeliveryDashboard />} />
-        
+
         </Route>
       </Routes>
     </>

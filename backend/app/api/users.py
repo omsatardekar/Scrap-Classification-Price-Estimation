@@ -127,6 +127,44 @@ def create_admin_or_delivery(
         "role": payload.role,
     }
 
+@router.get("/{user_id}/active-orders")
+def get_user_active_orders(
+    user_id: str,
+    current_user: dict = Depends(get_current_user),
+):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Admin access only")
+
+    user_info = users_collection.find_one({"_id": ObjectId(user_id)})
+    if not user_info:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    role = user_info.get("role")
+    active_orders = []
+
+    if role == "user":
+        active_orders = list(orders_collection.find(
+            {
+                "user_id": ObjectId(user_id),
+                "status": {"$in": ["pending", "assigned", "collected"]}
+            },
+            {"_id": 1, "status": 1, "created_at": 1, "material": 1}
+        ))
+    elif role == "delivery":
+        active_orders = list(orders_collection.find(
+            {
+                "delivery_id": ObjectId(user_id),
+                "status": {"$in": ["assigned", "collected"]}
+            },
+            {"_id": 1, "status": 1, "created_at": 1, "material": 1}
+        ))
+
+    # Convert ObjectIds to strings
+    for order in active_orders:
+        order["_id"] = str(order["_id"])
+
+    return {"active_orders": active_orders, "count": len(active_orders)}
+
 @router.put("/{user_id}/disable")
 def disable_user(
     user_id: str,
@@ -135,17 +173,37 @@ def disable_user(
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Admin access only")
 
-    result = users_collection.update_one(
+    user_to_disable = users_collection.find_one({"_id": ObjectId(user_id)})
+    if not user_to_disable:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    role = user_to_disable.get("role")
+    active_orders_count = 0
+    if role == "user":
+        active_orders_count = orders_collection.count_documents({
+            "user_id": ObjectId(user_id),
+            "status": {"$in": ["pending", "assigned", "collected"]}
+        })
+    elif role == "delivery":
+        active_orders_count = orders_collection.count_documents({
+            "delivery_id": ObjectId(user_id),
+            "status": {"$in": ["assigned", "collected"]}
+        })
+
+    if active_orders_count > 0:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Cannot disable {role} with active orders"
+        )
+
+    users_collection.update_one(
         {"_id": ObjectId(user_id)},
         {"$set": {"disabled": True}},
     )
 
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail="User not found")
-
     return {"message": "User disabled successfully"}
 
-@router.post("/{user_id}/delete")
+@router.delete("/{user_id}")
 def delete_user(
     user_id: str,
     current_user: dict = Depends(get_current_user),
@@ -153,9 +211,13 @@ def delete_user(
     if current_user["role"] != "admin":
         raise HTTPException(status_code=403, detail="Admin only")
 
-    has_orders = orders_collection.count_documents(
-        {"user_id": ObjectId(user_id)}
-    ) > 0
+    # Check if there are any historical orders involving this user
+    has_orders = orders_collection.count_documents({
+        "$or": [
+            {"user_id": ObjectId(user_id)},
+            {"delivery_id": ObjectId(user_id)}
+        ]
+    }) > 0
 
     if has_orders:
         users_collection.update_one(
