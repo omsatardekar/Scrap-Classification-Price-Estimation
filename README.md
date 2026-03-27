@@ -1,11 +1,11 @@
-# ScrapX ♻️
+# ScrapX 
 ### AI-Powered Scrap Classification & Price Estimation
 
 ScrapX is a modern, high-performance platform designed to revolutionize the scrap recycling industry. Using advanced machine learning, ScrapX allows users to classify different types of scrap materials (metals, plastics, paper, etc.) from images and get real-time price estimations, making the recycling process efficient and transparent.
 
 ---
 
-## 📽️ Project Overview
+## Project Overview
 ScrapX provides a seamless interface for users to identify their scrap materials and book pickups. It integrates a robust management system for administrators to track orders and dispatch delivery personnel, creating a complete end-to-end recycling ecosystem.
 
 ### Key Features:
@@ -17,7 +17,7 @@ ScrapX provides a seamless interface for users to identify their scrap materials
 
 ---
 
-## 🔄 Full Project Flow
+## Full Project Flow
 1. **User Side**:
     - **Upload & Identify**: User uploads an image of the scrap material.
     - **AI Processing**: The PyTorch-based CNN model identifies the material (e.g., Aluminum, Iron, Plastic).
@@ -34,7 +34,7 @@ ScrapX provides a seamless interface for users to identify their scrap materials
 
 ---
 
-## 🖥️ System Panels
+## System Panels
 
 ### 1. User Panel
 A clean and intuitive dashboard for general users.
@@ -60,7 +60,7 @@ Streamlined for on-the-field delivery partners.
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technologies Used |
 | :--- | :--- |
@@ -72,7 +72,7 @@ Streamlined for on-the-field delivery partners.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v18+)
@@ -104,10 +104,10 @@ Streamlined for on-the-field delivery partners.
 
 ---
 
-## 📧 Contact & Support
+## Contact & Support
 For any queries, suggestions, or reports, feel free to reach out:
 
 📩 **Email**: [omkarsatardekar4002@gmail.com](mailto:omkarsatardekar4002@gmail.com)
 
 ---
-*Developed with ❤️ by the ScrapX Team.*
+*Developed with ❤️ by the Om Satardekar.*
